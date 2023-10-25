@@ -16,8 +16,7 @@ class DependencieController extends Controller
     public function index():Response
     {
 
-        return 'Hola mundo';
-        return Inertia::render('Dependencies/Index',['dependencies'=>Dependencie::all()]);
+        return Inertia::render('Dependencies/Index',[]);
     }
 
     /**
@@ -38,10 +37,7 @@ class DependencieController extends Controller
         ]);
 
         $request->user()->dependencies()->create($validated);
-
-
-
-
+        return redirect(route('dependencies.index'));
     }
 
     /**

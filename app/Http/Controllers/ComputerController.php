@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Computer;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ComputerController extends Controller
 {
@@ -12,7 +14,7 @@ class ComputerController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Dependencies/Index',[]);
     }
 
     /**
@@ -26,9 +28,16 @@ class ComputerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request):RedirectResponse
     {
-        //
+        $validated= $request->validate([
+            'name'=>'required|string|max:255'
+        ]);
+
+        $request->user()->dependencies()->computers()->create($validated);
+        return redirect(route('computers.index'));
+
+
     }
 
     /**
